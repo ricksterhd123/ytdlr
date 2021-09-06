@@ -1,0 +1,5 @@
+{
+    "filepath": "static/",
+    "max_video_length_seconds": 1200,
+    "video_expired_after": 3600 
+}

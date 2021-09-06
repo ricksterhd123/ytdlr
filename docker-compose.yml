@@ -1,0 +1,37 @@
+version: "3"
+services:
+  nginx:
+    restart: always
+    build: nginx/
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      # ssl
+
+  # youtube download microservice
+  downloader:
+    restart: always
+    build: downloader/
+    volumes:
+      - static:/static
+
+  # webserver API
+  webserver:
+    restart: always
+    build: webserver/
+    volumes:
+      - static:/static
+
+  # webapp:
+  #   restart: always
+  #   build: webapp/
+  #   volumes:
+  #     - static:/static
+
+  bot:
+    restart: always
+    build: bot/
+
+volumes:
+  static:
