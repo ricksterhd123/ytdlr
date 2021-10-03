@@ -9,4 +9,4 @@ or a web browser.
 - [x] Convert youtube videos to mp3
 - [x] Discord bot interface
 - [x] Download or stream them directly from webserver URL
-- [] Web UI - for users without access to discord
+- [ ] Web UI - for users without access to discord
