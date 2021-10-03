@@ -1,5 +1,6 @@
 version: "3"
 services:
+  # reverse proxy
   nginx:
     restart: always
     build: nginx/
@@ -7,7 +8,8 @@ services:
       - "80:80"
       - "443:443"
     volumes:
-      # ssl
+      - /etc/letsencrypt/live/ytdlr.skywarriors.net/fullchain.pem:/etc/letsencrypt/live/ytdlr.skywarriors.net/fullchain.pem
+      - /etc/letsencrypt/live/ytdlr.skywarriors.net/privkey.pem:/etc/letsencrypt/live/ytdlr.skywarriors.net/privkey.pem
 
   # youtube download microservice
   downloader:
@@ -15,6 +17,8 @@ services:
     build: downloader/
     volumes:
       - static:/static
+    depends_on:
+      - "webserver"
 
   # webserver API
   webserver:
@@ -22,16 +26,15 @@ services:
     build: webserver/
     volumes:
       - static:/static
+    depends_on:
+      - "nginx"
 
-  # webapp:
-  #   restart: always
-  #   build: webapp/
-  #   volumes:
-  #     - static:/static
-
+  # discord bot
   bot:
     restart: always
     build: bot/
+    depends_on:
+      - "downloader"
 
 volumes:
   static:
